@@ -1,5 +1,5 @@
 #!/usr/local/bin/bash
 
-ONE=$($useless/one.sh)
+ONE="$($useless/one.sh)"
 
-echo $((ONE + 1))
+printf '%s' "$((ONE + 1))"
