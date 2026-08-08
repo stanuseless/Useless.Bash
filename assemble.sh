@@ -2,7 +2,7 @@
 
 REP_OWNER='stanuseless'
 REP_NAME='Useless.Bash'
-VERSION='0.4.0'
+VERSION='0.4.1'
 
 if [[ -d 'build' ]]; then
  echo 'Build dir exists!' >&2; exit 1; fi
