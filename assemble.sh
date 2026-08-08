@@ -7,11 +7,14 @@ REP_OWNER='stanuseless'
 REP_NAME='Useless.Bash'
 VERSION='0.4.1'
 
-BUILD_TYPE="$1"
-case "${BUILD_TYPE}" in
- 'unstable') VERSION_NAME="${VERSION}-UNSTABLE";;
- '') echo 'No build type!' >&2; exit 1;;
- *) echo "Build type \"${BUILD_TYPE}\" is not supported!" >&2; exit 1;;
+BUILD_VARIANT="$1"
+case "${BUILD_VARIANT}" in
+ 'unstable')
+  VERSION_NAME="${VERSION}-UNSTABLE"
+  SIGNING_TYPE='debug'
+ ;;
+ '') echo 'No build variant!' >&2; exit 1;;
+ *) echo "Build variant \"${BUILD_VARIANT}\" is not supported!" >&2; exit 1;;
 esac
 
 if [[ -d 'build' ]]; then
@@ -23,6 +26,8 @@ SUBJECT='build/yml/metadata.yml'
 echo "repository:
  owner: '${REP_OWNER}'
  name: '${REP_NAME}'
+variant: '${BUILD_VARIANT}'
+signing: '${SIGNING_TYPE}'
 version: '${VERSION_NAME}'" > "${SUBJECT}"
 
 if [[ ! -s 'LICENSE' ]]; then
