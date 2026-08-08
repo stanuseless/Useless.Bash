@@ -29,8 +29,8 @@ $ TMP_PATH="$(mktemp)"; \
 
 ## Unstable
 
-`0.4.4-UNSTABLE`
-| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.4.4-UNSTABLE)
+`0.4.5-UNSTABLE`
+| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.4.5-UNSTABLE)
 | [Key](https://stanuseless.github.io/debug-public.pem)
 
 ### Build and Install
@@ -38,15 +38,15 @@ $ TMP_PATH="$(mktemp)"; \
 ```
 $ ./assemble.sh \
  && ./src/test/bash/unit_test.sh \
- && unzip -d /opt/Useless.Bash-0.4.4-UNSTABLE ./build/zip/Useless.Bash-0.4.4-UNSTABLE.zip
+ && unzip -d /opt/Useless.Bash-0.4.5-UNSTABLE ./build/zip/Useless.Bash-0.4.5-UNSTABLE.zip
 ```
 
 ### Download and Install
 
 ```
 $ TMP_PATH="$(mktemp)"; \
- curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.4.4-UNSTABLE/Useless.Bash-0.4.4-UNSTABLE.zip' \
-  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.4.4-UNSTABLE "${TMP_PATH}" && rm "${TMP_PATH}"
+ curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.4.5-UNSTABLE/Useless.Bash-0.4.5-UNSTABLE.zip' \
+  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.4.5-UNSTABLE "${TMP_PATH}" && rm "${TMP_PATH}"
 ```
 
 ---
