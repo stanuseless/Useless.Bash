@@ -5,7 +5,7 @@ if [[ $# -ne 1 ]]; then
 
 REP_OWNER='stanuseless'
 REP_NAME='Useless.Bash'
-VERSION='0.4.14'
+VERSION='0.4.15'
 
 BUILD_VARIANT="$1"
 case "${BUILD_VARIANT}" in
