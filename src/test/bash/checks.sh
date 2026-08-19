@@ -17,7 +17,7 @@ case "${BUILD_VARIANT}" in
  'unstable');;
  'release')
   while IFS= read -r -d '' TEST_PATH; do
-   if [[ "${TEST_PATH}" == "${TESTS}/unit_test.sh" \
+   if [[ "${TEST_PATH}" == "${TESTS}/checks.sh" \
     || "${TEST_PATH}" =~ ^${TESTS}/check_.+\.sh$ \
     || "${TEST_PATH}" =~ ^${TESTS}/mocks/.+$ \
     ]]; then continue
