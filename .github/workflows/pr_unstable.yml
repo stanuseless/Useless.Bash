@@ -22,10 +22,10 @@ jobs:
            -e VCS_DST_COMMIT='${{github.event.pull_request.base.sha}}' \
            -e GH_WORKER_PAT \
            -e GPG_PASSWORD \
-           -e SIGNING_KEY_ALIAS='debug' \
+           -e SIGNING_ALIAS='debug' \
            -e SIGNING_KEYS_PASSWORD \
            --interactive --detach --name container "${DOCKER_IMAGE}@sha256:${DOCKER_IMAGE_DIGEST}"
-          docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.SIGNING_KEYS_DEBUG}}" | base64 -d > "${CIX_SHARED}/${SIGNING_KEY_ALIAS}.pkcs12"'
+          docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.SIGNING_KEYS_DEBUG}}" | base64 -d > "${CIX_SHARED}/${SIGNING_ALIAS}.pkcs12"'
           docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.GPG_WORKER_KEY}}" > "${CIX_SHARED}/key.gpg"'
           docker exec container /usr/local/bin/bash -c '$cix/bash/pr_unstable.sh'
       - if: always()
