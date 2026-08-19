@@ -9,7 +9,7 @@ jobs:
     steps:
       - env:
           DOCKER_IMAGE: 'docker.io/kepocnhh/cix-bash-amd64'
-          DOCKER_IMAGE_DIGEST: '5df6f008540958bc81cde0f82d1fae31cffc3461b047114ecea9f7a054335316'
+          DOCKER_IMAGE_DIGEST: 'b09d0ba6f66aebdf5ffbdf3c3c248197ad56c4e4dd2d42fdcf2d26137aed80f1'
           SIGNING_KEYS_PASSWORD: '${{secrets.SIGNING_KEYS_PASSWORD_DEBUG}}'
           GPG_PASSWORD: '${{secrets.GPG_PASSWORD}}'
           GH_WORKER_PAT: '${{secrets.GH_WORKER_PAT}}'
