@@ -1,15 +1,9 @@
 #!/usr/local/bin/bash
 
-if [[ ! -d "${asserts}" ]]; then
- echo 'No asserts!' >&2; exit 1
-elif [[ ! -d "${mocks}" ]]; then
- echo 'No mocks!' >&2; exit 1
-fi
-
 TESTS='src/test/bash'
 
 while IFS= read -r -d '' TEST_PATH; do
- if [[ "${TEST_PATH}" == "${TESTS}/unit_test.sh" \
+ if [[ "${TEST_PATH}" == "${TESTS}/checks.sh" \
   || "${TEST_PATH}" =~ ^${TESTS}/check_.+\.sh$ \
   || "${TEST_PATH}" =~ ^${TESTS}/mocks/.+$ \
   ]]; then continue
@@ -21,10 +15,3 @@ while IFS= read -r -d '' TEST_PATH; do
  fi
  "${TEST_PATH}" || exit 1
 done < <(find "${TESTS}" -depth -type f -print0)
-
-. ${TESTS}/check_coverage.sh
-
-. ${TESTS}/check_license.sh
-. ${TESTS}/check_readme.sh
-
-echo 'All tests passed.'
