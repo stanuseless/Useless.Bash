@@ -9,8 +9,8 @@ jobs:
     steps:
       - env:
           DOCKER_IMAGE: 'docker.io/kepocnhh/cix-bash-amd64'
-          DOCKER_IMAGE_DIGEST: 'df0ed2a357a12a2d010a4dd6b397950556d161f30127421b254a7618810130f3'
-          SIGNING_KEYS_PASSWORD: '${{secrets.SIGNING_KEYS_PASSWORD_DEBUG}}'
+          DOCKER_IMAGE_DIGEST: '732871efe9573a2fe8474a3147dc01b6a0c5ab27ccf97cb15c36ff37574a0249'
+          SIGNING_PASSWORD: '${{secrets.SIGNING_PASSWORD_DEBUG}}'
           GPG_PASSWORD: '${{secrets.GPG_PASSWORD}}'
           GH_WORKER_PAT: '${{secrets.GH_WORKER_PAT}}'
         run: |
@@ -23,7 +23,7 @@ jobs:
            -e GH_WORKER_PAT \
            -e GPG_PASSWORD \
            -e SIGNING_ALIAS='debug' \
-           -e SIGNING_KEYS_PASSWORD \
+           -e SIGNING_PASSWORD \
            --interactive --detach --name container "${DOCKER_IMAGE}@sha256:${DOCKER_IMAGE_DIGEST}"
           docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.SIGNING_KEYS_DEBUG}}" | base64 -d > "${CIX_SHARED}/${SIGNING_ALIAS}.pkcs12"'
           docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.GPG_WORKER_KEY}}" > "${CIX_SHARED}/key.gpg"'
