@@ -13,6 +13,7 @@ jobs:
           SIGNING_PASSWORD: '${{secrets.SIGNING_PASSWORD_DEBUG}}'
           GPG_PASSWORD: '${{secrets.GPG_PASSWORD}}'
           GH_WORKER_PAT: '${{secrets.GH_WORKER_PAT}}'
+          WORKER_BOT_SECRET: '${{secrets.WORKER_BOT_SECRET}}'
         run: |
           docker run \
            -e VCS_REP_OWNER='${{github.event.repository.owner.login}}' \
@@ -24,6 +25,9 @@ jobs:
            -e GPG_PASSWORD \
            -e SIGNING_ALIAS='debug' \
            -e SIGNING_PASSWORD \
+           -e WORKER_BOT_ID=${{secrets.WORKER_BOT_ID}} \
+           -e WORKER_BOT_SECRET \
+           -e WORKER_CHAT_ID=${{secrets.WORKER_CHAT_ID}} \
            --interactive --detach --name container "${DOCKER_IMAGE}@sha256:${DOCKER_IMAGE_DIGEST}"
           docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.SIGNING_KEYS_DEBUG}}" | base64 -d > "${CIX_SHARED}/${SIGNING_ALIAS}.pkcs12"'
           docker exec container /usr/local/bin/bash -c 'printf "%s" "${{secrets.GPG_WORKER_KEY}}" > "${CIX_SHARED}/key.gpg"'
