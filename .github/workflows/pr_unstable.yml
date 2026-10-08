@@ -20,7 +20,6 @@ jobs:
           VCS_DST_COMMIT: '${{github.event.pull_request.base.sha}}'
           GH_WORKER_PAT: '${{secrets.GH_WORKER_PAT}}'
           GPG_PASSWORD: '${{secrets.GPG_PASSWORD}}'
-          SIGNING_PASSWORD: '${{secrets.SIGNING_PASSWORD_DEBUG}}'
         run: docker run
           -e VCS_REP_OWNER
           -e VCS_REP_NAME
@@ -30,7 +29,6 @@ jobs:
           -e GH_WORKER_PAT
           -e GPG_PASSWORD
           -e SIGNING_ALIAS='debug'
-          -e SIGNING_PASSWORD
           --interactive --detach --name container "${DOCKER_IMAGE}@sha256:${DOCKER_IMAGE_DIGEST}"
       - env:
           SIGNING_KEYS_DEBUG: '${{secrets.SIGNING_KEYS_DEBUG}}'
@@ -40,20 +38,27 @@ jobs:
            'base64 -d > "${CIX_SHARED}/${SIGNING_ALIAS}.pkcs12"'
           printf '%s' "${GPG_WORKER_KEY}" | docker exec -i container /usr/local/bin/bash -c \
            'cat > "${CIX_SHARED}/key.gpg"'
-      - run: docker exec container /usr/local/bin/bash -c '$cix/gh/check_rates.sh'
       - shell: bash --noprofile --norc -o pipefail -c "cat '{0}' | docker exec container /usr/local/bin/bash -c \"$(cat)\""
         run: |
+          . $cix/gh/check_rates.sh
           . $cix/gh/init.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}"
           . $cix/git/checkout.sh "${VCS_SRC_COMMIT}" "${VCS_DST_BRANCH}"
           . $cix/gh/config.sh
           . $cix/git/merge.sh "${VCS_SRC_COMMIT}"
-      - run: |
-          docker exec container /usr/local/bin/bash -c '$cix/bash/assemble.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "unstable"'
-          docker exec container /usr/local/bin/bash -c '$cix/bash/checks.sh "unstable"'
-      - run: |
-          docker exec container /usr/local/bin/bash -c '$cix/bash/commit.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_BRANCH}"'
-          docker exec container /usr/local/bin/bash -c '$cix/gh/push.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}"'
-      - run: docker exec container /usr/local/bin/bash -c '$cix/bash/gh_release.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_COMMIT}"'
+      - shell: bash --noprofile --norc -o pipefail -c "cat '{0}' | docker exec container /usr/local/bin/bash -c \"$(cat)\""
+        run: |
+          . $cix/bash/assemble.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" 'unstable'
+          . $cix/bash/checks.sh 'unstable'
+      - shell: bash --noprofile --norc -o pipefail -c "cat '{0}' | docker exec container /usr/local/bin/bash -c \"$(cat)\""
+        run: |
+          . $cix/bash/commit.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_BRANCH}"
+          . $cix/gh/push.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}"
+      - env:
+          SIGNING_PASSWORD: '${{secrets.SIGNING_PASSWORD_DEBUG}}'
+        run: docker exec
+          -e SIGNING_PASSWORD
+          container /usr/local/bin/bash -c
+          '$cix/bash/gh_release.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_COMMIT}"'
       - env:
           WORKER_BOT_ID: '${{secrets.WORKER_BOT_ID}}'
           WORKER_BOT_SECRET: '${{secrets.WORKER_BOT_SECRET}}'
@@ -62,6 +67,7 @@ jobs:
           -e WORKER_BOT_ID
           -e WORKER_BOT_SECRET
           -e WORKER_CHAT_ID
-          container /usr/local/bin/bash -c '$cix/bash/message.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_SRC_COMMIT}" "${VCS_DST_COMMIT}"'
+          container /usr/local/bin/bash -c
+          '$cix/bash/message.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_SRC_COMMIT}" "${VCS_DST_COMMIT}"'
       - if: always()
         run: docker rm -f container || true
