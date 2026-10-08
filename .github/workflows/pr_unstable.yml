@@ -21,9 +21,6 @@ jobs:
           GH_WORKER_PAT: '${{secrets.GH_WORKER_PAT}}'
           GPG_PASSWORD: '${{secrets.GPG_PASSWORD}}'
           SIGNING_PASSWORD: '${{secrets.SIGNING_PASSWORD_DEBUG}}'
-          WORKER_BOT_ID: '${{secrets.WORKER_BOT_ID}}'
-          WORKER_BOT_SECRET: '${{secrets.WORKER_BOT_SECRET}}'
-          WORKER_CHAT_ID: '${{secrets.WORKER_CHAT_ID}}'
         run: docker run
           -e VCS_REP_OWNER
           -e VCS_REP_NAME
@@ -34,9 +31,6 @@ jobs:
           -e GPG_PASSWORD
           -e SIGNING_ALIAS='debug'
           -e SIGNING_PASSWORD
-          -e WORKER_BOT_ID
-          -e WORKER_BOT_SECRET
-          -e WORKER_CHAT_ID
           --interactive --detach --name container "${DOCKER_IMAGE}@sha256:${DOCKER_IMAGE_DIGEST}"
       - env:
           SIGNING_KEYS_DEBUG: '${{secrets.SIGNING_KEYS_DEBUG}}'
@@ -46,6 +40,28 @@ jobs:
            'base64 -d > "${CIX_SHARED}/${SIGNING_ALIAS}.pkcs12"'
           printf '%s' "${GPG_WORKER_KEY}" | docker exec -i container /usr/local/bin/bash -c \
            'cat > "${CIX_SHARED}/key.gpg"'
-      - run: docker exec container /usr/local/bin/bash -c '$cix/bash/pr_unstable.sh'
+      - run: docker exec container /usr/local/bin/bash -c '$cix/gh/check_rates.sh'
+      - shell: bash --noprofile --norc -o pipefail -c "cat '{0}' | docker exec container /usr/local/bin/bash -c \"$(cat)\""
+        run: |
+          . $cix/gh/init.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}"
+          . $cix/git/checkout.sh "${VCS_SRC_COMMIT}" "${VCS_DST_BRANCH}"
+          . $cix/gh/config.sh
+          . $cix/git/merge.sh "${VCS_SRC_COMMIT}"
+      - run: |
+          docker exec container /usr/local/bin/bash -c '$cix/bash/assemble.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "unstable"'
+          docker exec container /usr/local/bin/bash -c '$cix/bash/checks.sh "unstable"'
+      - run: |
+          docker exec container /usr/local/bin/bash -c '$cix/bash/commit.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_BRANCH}"'
+          docker exec container /usr/local/bin/bash -c '$cix/gh/push.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}"'
+      - run: docker exec container /usr/local/bin/bash -c '$cix/bash/gh_release.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_DST_COMMIT}"'
+      - env:
+          WORKER_BOT_ID: '${{secrets.WORKER_BOT_ID}}'
+          WORKER_BOT_SECRET: '${{secrets.WORKER_BOT_SECRET}}'
+          WORKER_CHAT_ID: '${{secrets.WORKER_CHAT_ID}}'
+        run: docker exec
+          -e WORKER_BOT_ID
+          -e WORKER_BOT_SECRET
+          -e WORKER_CHAT_ID
+          container /usr/local/bin/bash -c '$cix/bash/message.sh "${VCS_REP_OWNER}" "${VCS_REP_NAME}" "${VCS_SRC_COMMIT}" "${VCS_DST_COMMIT}"'
       - if: always()
         run: docker rm -f container || true
