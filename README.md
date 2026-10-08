@@ -29,24 +29,24 @@ $ TMP_PATH="$(mktemp)"; \
 
 ## Unstable
 
-`0.6.3-UNSTABLE`
-| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.6.3-UNSTABLE)
+`0.6.4-UNSTABLE`
+| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.6.4-UNSTABLE)
 | [Key](https://stanuseless.github.io/debug-public.pem)
 
 ### Build and Install
 
 ```
-$ ./assemble.sh 'unstable' \
- && ./src/test/bash/checks.sh 'unstable' \
- && unzip -d /opt/Useless.Bash-0.6.3-UNSTABLE ./build/zip/Useless.Bash-0.6.3-UNSTABLE.zip
+$ ./assemble.sh --build_variant 'unstable' \
+ && ./src/test/bash/checks.sh --build_variant 'unstable' \
+ && unzip -d /opt/Useless.Bash-0.6.4-UNSTABLE ./build/zip/Useless.Bash-0.6.4-UNSTABLE.zip
 ```
 
 ### Download and Install
 
 ```
 $ TMP_PATH="$(mktemp)"; \
- curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.3-UNSTABLE/Useless.Bash-0.6.3-UNSTABLE.zip' \
-  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.6.3-UNSTABLE "${TMP_PATH}" && rm "${TMP_PATH}"
+ curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.4-UNSTABLE/Useless.Bash-0.6.4-UNSTABLE.zip' \
+  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.6.4-UNSTABLE "${TMP_PATH}" && rm "${TMP_PATH}"
 ```
 
 ---

@@ -15,3 +15,5 @@ while IFS= read -r -d '' TEST_PATH; do
  fi
  "${TEST_PATH}" || exit 1
 done < <(find "${TESTS}" -depth -type f -print0)
+
+echo 'All tests passed.'
