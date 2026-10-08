@@ -36,8 +36,8 @@ $ TMP_PATH="$(mktemp)"; \
 ### Build and Install
 
 ```
-$ ./assemble.sh 'unstable' \
- && ./src/test/bash/checks.sh 'unstable' \
+$ ./assemble.sh --build_variant 'unstable' \
+ && ./src/test/bash/checks.sh --build_variant 'unstable' \
  && unzip -d /opt/Useless.Bash-0.6.4-UNSTABLE ./build/zip/Useless.Bash-0.6.4-UNSTABLE.zip
 ```
 
