@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     container:
-      image: docker.io/kepocnhh/cix-bash-amd64@sha256:30e1d49783290b434720a511fab431436df0c5269c73085cbdee7a7bd0f309e9
+      image: docker.io/kepocnhh/cix-bash-amd64@sha256:76e752592a407472acf35be3175e4d06a66ac08f1f7fc57bb21056c396274d8d
     defaults:
       run:
         working-directory: /.cix/workdir
