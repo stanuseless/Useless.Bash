@@ -2,7 +2,7 @@
 
 REP_OWNER='stanuseless'
 REP_NAME='Useless.Bash'
-VERSION_NAME='0.6.6'
+VERSION_NAME='0.6.7'
 
 unset BUILD_VARIANT
 
