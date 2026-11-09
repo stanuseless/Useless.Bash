@@ -31,7 +31,7 @@ $ TMP_PATH="$(mktemp)"; \
 
 `0.6.8-UNSTABLE`
 | [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.6.8-UNSTABLE)
-| [Key](https://stanuseless.github.io/debug-public.pem)
+| [Key](https://stanuseless.github.io/stanuseless_debug.pub)
 
 ### Build and Install
 
