@@ -45,9 +45,10 @@ $ TMP_PATH="$(mktemp)"; \
 ### Download and Install
 
 ```
-$ TMP_PATH="$(mktemp)"; \
- curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.8-UNSTABLE/Useless.Bash-0.6.8-UNSTABLE.zip' \
-  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.6.8-UNSTABLE "${TMP_PATH}" && rm "${TMP_PATH}"
+TMP_PATH="$(mktemp)" \
+ && curl -m 32 -f -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.8-UNSTABLE/Useless.Bash-0.6.8-UNSTABLE.tar.gz' -o "${TMP_PATH}" \
+ && mkdir '/opt/Useless.Bash-0.6.8-UNSTABLE/' \
+ && tar -xf "${TMP_PATH}" -C '/opt/Useless.Bash-0.6.8-UNSTABLE/' && rm "${TMP_PATH}"
 ```
 
 ---
