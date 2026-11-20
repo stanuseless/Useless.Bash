@@ -29,26 +29,26 @@ $ TMP_PATH="$(mktemp)"; \
 
 ## Unstable
 
-`0.6.8-UNSTABLE`
-| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.6.8-UNSTABLE)
-| [Key](https://stanuseless.github.io/stanuseless_debug.pub)
+`0.6.9-UNSTABLE`
+| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.6.9-UNSTABLE)
+| [Key](https://stanuseless.github.io/src/main/res/stanuseless_debug.pub)
 
 ### Build and Install
 
 ```
 ./assemble.sh --build_variant 'unstable' \
  && ./src/test/bash/checks.sh --build_variant 'unstable' \
- && mkdir '/opt/Useless.Bash-0.6.8-UNSTABLE/' \
- && tar -xf './build/tar/Useless.Bash-0.6.8-UNSTABLE.tar.gz' -C '/opt/Useless.Bash-0.6.8-UNSTABLE/'
+ && mkdir '/opt/Useless.Bash-0.6.9-UNSTABLE/' \
+ && tar -xf './build/tar/Useless.Bash-0.6.9-UNSTABLE.tar.gz' -C '/opt/Useless.Bash-0.6.9-UNSTABLE/'
 ```
 
 ### Download and Install
 
 ```
 TMP_PATH="$(mktemp)" \
- && curl -m 32 -f -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.8-UNSTABLE/Useless.Bash-0.6.8-UNSTABLE.tar.gz' -o "${TMP_PATH}" \
- && mkdir '/opt/Useless.Bash-0.6.8-UNSTABLE/' \
- && tar -xf "${TMP_PATH}" -C '/opt/Useless.Bash-0.6.8-UNSTABLE/' && rm "${TMP_PATH}"
+ && curl -m 32 -f -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.6.9-UNSTABLE/Useless.Bash-0.6.9-UNSTABLE.tar.gz' -o "${TMP_PATH}" \
+ && mkdir '/opt/Useless.Bash-0.6.9-UNSTABLE/' \
+ && tar -xf "${TMP_PATH}" -C '/opt/Useless.Bash-0.6.9-UNSTABLE/' && rm "${TMP_PATH}"
 ```
 
 ---

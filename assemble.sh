@@ -3,7 +3,7 @@
 REP_GROUP='stanuseless'
 REP_OWNER='stanuseless'
 REP_NAME='Useless.Bash'
-VERSION_NAME='0.6.8'
+VERSION_NAME='0.6.9'
 
 unset BUILD_VARIANT
 unset BUILD_WORKDIR
