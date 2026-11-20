@@ -5,24 +5,26 @@ A few useless Bash scripts.
 
 ## Release
 
-`0.4.0`
-| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.4.0)
-| [Key](https://stanuseless.github.io/release-public.pem)
+`0.7.1`
+| [GitHub](https://github.com/stanuseless/Useless.Bash/releases/tag/0.7.1)
+| [Key](https://stanuseless.github.io/src/main/res/stanuseless_release.pub)
 
 ### Build and Install
 
 ```
-$ ./assemble.sh \
- && ./src/test/bash/unit_test.sh \
- && unzip -d /opt/Useless.Bash-0.4.0 ./build/zip/Useless.Bash-0.4.0.zip
+./assemble.sh --build_variant 'release' \
+ && ./src/test/bash/checks.sh --build_variant 'release' \
+ && mkdir '/opt/Useless.Bash-0.7.1/' \
+ && tar -xf './build/tar/Useless.Bash-0.7.1.tar.gz' -C '/opt/Useless.Bash-0.7.1/'
 ```
 
 ### Download and Install
 
 ```
-$ TMP_PATH="$(mktemp)"; \
- curl -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.4.0/Useless.Bash-0.4.0.zip' \
-  -o "${TMP_PATH}" && unzip -d /opt/Useless.Bash-0.4.0 "${TMP_PATH}" && rm "${TMP_PATH}"
+TMP_PATH="$(mktemp)" \
+ && curl -m 32 -f -L 'https://github.com/stanuseless/Useless.Bash/releases/download/0.7.1/Useless.Bash-0.7.1.tar.gz' -o "${TMP_PATH}" \
+ && mkdir '/opt/Useless.Bash-0.7.1/' \
+ && tar -xf "${TMP_PATH}" -C '/opt/Useless.Bash-0.7.1/' && rm "${TMP_PATH}"
 ```
 
 ---
